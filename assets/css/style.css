@@ -32,7 +32,7 @@ body{
 
 .hero-section{
     background: linear-gradient(
-        125deg,
+        135deg,
         var(--mc-blue-dark) 0%,
         var(--mc-blue) 62%,
         var(--mc-green) 100%,
