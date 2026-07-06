@@ -1,0 +1,491 @@
+/* ==========================================================
+   MAKUENI COUNTY BRAND PALETTE
+   Based on the official Makueni County flag (blue, white, green)
+========================================================== */
+:root{
+    --mc-blue: #0B3D69;
+    --mc-blue-dark: #072844;
+    --mc-blue-light: #1D6FB8;
+    --mc-green: #1B7A3D;
+    --mc-green-light: #2E9E52;
+    --mc-bg: #F7F9FB;
+
+    /* Re-theme Bootstrap 5.3's own CSS variables so every
+       btn-primary / text-primary / bg-primary / btn-success
+       already used across the site picks up the new palette
+       automatically (Bootstrap derives hover/focus states from
+       these via color-mix, so no per-component overrides needed). */
+    --bs-primary: var(--mc-blue);
+    --bs-primary-rgb: 11, 61, 105;
+    --bs-success: var(--mc-green);
+    --bs-success-rgb: 27, 122, 61;
+    --bs-link-color: var(--mc-blue);
+    --bs-link-color-rgb: 11, 61, 105;
+    --bs-link-hover-color: var(--mc-blue-dark);
+    --bs-link-hover-color-rgb: 7, 40, 68;
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    background: var(--mc-bg);
+}
+
+.hero-section{
+    background: linear-gradient(
+        135deg,
+        var(--mc-blue-dark) 0%,
+        var(--mc-blue) 55%,
+        var(--mc-green) 100%
+        );
+
+    color: white;
+
+    min-height: 90vh;
+
+    display: flex;
+    align-items: center;
+    POSITION: RELATIVE;
+    overflow: hidden;
+}
+
+.hero-image{
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.service-card{
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+
+.service-icon{
+    font-size: 3rem;
+    color: var(--mc-blue);
+    margin-bottom: 15px;
+}
+
+.dashboard-card{
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+.dashboard-card:hover{
+    transform: scale(1.03);
+}
+
+.dashboard-icon{
+    font-size: 2.5rem;
+    color: var(--mc-green);
+    margin-bottom: 10px;
+}
+
+.form-control{
+    border-radius: 14px !important;
+    padding: 14px;
+}
+
+.btn{
+    padding: 12px 20px;
+}
+
+.card{
+    border-radius: 24px !important;
+}
+
+@media(max-width:768px){
+
+.hero-section{
+    text-align: center;
+    padding: 60px 0;
+}
+
+.hero-section h1{
+    font-size: 2rem;
+}
+
+.hero-image{
+    margin-top: 30px;
+}
+
+}
+
+.service-card{
+    transition: transform 0.2s ease, box-shadow 0.15s ease;
+}
+.service-card:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1)!important;
+}
+/* ==========================================================
+   PASSWORD MODULE
+   Makueni ICT Centres
+========================================================== */
+
+/* ---------- Password Card ---------- */
+
+#passwordCard{
+
+    display:none;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    animation:fadeIn .30s ease;
+
+}
+
+/* ---------- Password Rules ---------- */
+
+.password-rule{
+
+    font-size:.95rem;
+
+    transition:.25s ease;
+
+}
+
+.password-rule.text-success{
+
+    font-weight:600;
+
+}
+
+.password-rule.text-danger{
+
+    opacity:.85;
+
+}
+
+/* ---------- Progress Bar ---------- */
+
+.progress{
+
+    border-radius:30px;
+
+    background:#e9ecef;
+
+}
+
+.progress-bar{
+
+    transition:width .35s ease;
+
+}
+
+/* ---------- Strength Text ---------- */
+
+#strengthText{
+
+    font-size:1rem;
+
+    transition:.30s;
+
+}
+
+/* ---------- Buttons ---------- */
+
+#togglePassword,
+#toggleConfirmPassword,
+#generatePassword{
+
+    min-width:52px;
+
+}
+
+#copyPassword{
+
+    transition:.25s;
+
+}
+
+#copyPassword:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/* ---------- Password Inputs ---------- */
+
+#password,
+#confirm_password{
+
+    transition:.25s;
+
+}
+
+#password:focus,
+#confirm_password:focus{
+
+    box-shadow:none;
+
+}
+
+/* ---------- Requirements Card ---------- */
+
+#requirementsCard{
+
+    border-left:5px solid #ffc107;
+
+    transition:.30s;
+
+}
+
+#requirementsCard.ready{
+
+    border-left:5px solid #198754;
+
+}
+
+/* ---------- Requirement Lines ---------- */
+
+#reqStrength,
+#reqMatch{
+
+    padding:6px 0;
+
+    transition:.25s;
+
+}
+
+/* ---------- Register Button ---------- */
+
+#registerButton{
+
+    transition:.30s;
+
+}
+
+#registerButton:not(:disabled){
+
+    transform:translateY(0);
+
+}
+
+#registerButton:not(:disabled):hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 .6rem 1rem rgba(25,135,84,.25);
+
+}
+
+#registerButton:disabled{
+
+    opacity:.65;
+
+    cursor:not-allowed;
+
+}
+
+/* ---------- Card Hover ---------- */
+
+#passwordCard:hover{
+
+    box-shadow:0 .5rem 1rem rgba(0,0,0,.08);
+
+}
+
+/* ---------- Security Tip ---------- */
+
+#securityTip{
+
+    transition:.30s;
+
+}
+
+/* ---------- Caps Lock ---------- */
+
+#capsLockWarning{
+
+    display:block;
+
+    margin-top:8px;
+
+    font-size:.9rem;
+
+}
+
+/* ---------- Input Groups ---------- */
+
+.input-group .btn{
+
+    border-left:none;
+
+}
+
+/* ---------- Smooth Icons ---------- */
+
+.bi{
+
+    transition:.25s;
+
+}
+
+/* ---------- Success State ---------- */
+
+.success-text{
+
+    color:#198754;
+
+}
+
+.error-text{
+
+    color:#dc3545;
+
+}
+
+/* ---------- Animation ---------- */
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-8px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ---------- Mobile ---------- */
+
+@media(max-width:768px){
+
+    #copyPassword{
+
+        margin-top:10px;
+
+    }
+
+    #strengthText{
+
+        margin-bottom:10px;
+
+    }
+
+}
+
+/* ---------- Darken Disabled Buttons ---------- */
+
+button:disabled{
+
+    filter:grayscale(10%);
+
+}
+
+/* ---------- Nice Rule Hover ---------- */
+
+.password-rule:hover{
+
+    padding-left:6px;
+
+}
+
+/* ---------- Progress Animation ---------- */
+
+.progress-bar{
+
+    animation:grow .40s ease;
+
+}
+
+@keyframes grow{
+
+    from{
+
+        width:0;
+
+    }
+
+}
+
+/* ---------- Card Headers ---------- */
+
+#passwordCard h5{
+
+    letter-spacing:.3px;
+
+}
+
+/* ---------- Rounded Inputs ---------- */
+
+.form-control{
+
+    border-radius:.75rem;
+
+}
+
+/* ---------- Input Group Fix ---------- */
+
+.input-group>.form-control{
+
+    border-top-right-radius:0;
+
+    border-bottom-right-radius:0;
+
+}
+
+/* ---------- Eye Buttons ---------- */
+
+#togglePassword:hover,
+#toggleConfirmPassword:hover{
+
+    background:#f8f9fa;
+
+}
+
+/* ---------- Magic Button ---------- */
+
+#generatePassword:hover{
+
+    background:var(--mc-blue);
+
+    color:#fff;
+
+}
+
+/* ---------- Green Requirements ---------- */
+
+.completed{
+
+    color:#198754;
+
+    font-weight:600;
+
+}
+
+/* ---------- Red Requirements ---------- */
+
+.pending{
+
+    color:#dc3545;
+
+}
+
+/* ---------- Ready Card ---------- */
+
+#requirementsCard.ready{
+
+    background:#f8fff8;
+
+}
+
+/* ---------- Nice Transition ---------- */
+
+.card{
+
+    transition:.3s;
+
+}
