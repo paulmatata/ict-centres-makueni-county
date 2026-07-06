@@ -34,10 +34,10 @@ body{
     background: linear-gradient(
         125deg,
         var(--mc-blue-dark) 0%,
-        var(--mc-blue) 0%
+        var(--mc-blue) 0%,
         var(--mc-blue) 62%,
-        var(--mc-green) 62%
-        var(--mc-green) 100%
+        var(--mc-green) 62%,
+        var(--mc-green) 100%,
         );
 
     color: white;
