@@ -5,7 +5,7 @@ include '../includes/admin_auth.php';
 include '../includes/db.php';
 
 include '../includes/admin_header.php';
-
+include '../includes/admin_sidebar.php';
 //reset admin password.
 
 
@@ -49,7 +49,7 @@ ict_centres.id";
 $result = mysqli_query($conn, $sql);
 
 ?>
-
+<div class="admin-content">
 <div class="container py-4">
     
 <!--Alert message for password reset success-->
@@ -212,5 +212,5 @@ Activate
 </div>
 
 </div>
-
+</div>
 <?php include '../includes/admin_footer.php'; ?>
