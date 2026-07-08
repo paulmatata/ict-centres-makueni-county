@@ -74,7 +74,7 @@ function nav_active($page, $current_page) {
         </li>
 
         <li class="nav-item">
-            <a class="nav-link <?php echo nav_active('center_report.php', $current_page); ?>" href="center_report.php">
+            <a class="nav-link <?php echo nav_active('centre_report.php', $current_page); ?>" href="center_report.php">
                 <i class="bi bi-building"></i> Centre Report
             </a>
         </li>
