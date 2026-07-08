@@ -3,6 +3,8 @@
 include '../includes/admin_auth.php';
 
 include '../includes/db.php';
+include '../includes/admin_header.php';
+include 'includes/admin_sidebar.php';
 
 require('../fpdf/fpdf.php');
 
@@ -188,3 +190,5 @@ if (!$has_rows) {
 $pdf->Output('D', 'Centre_Report.pdf');
 
 ?>
+<div class="admin-content">
+</div>
