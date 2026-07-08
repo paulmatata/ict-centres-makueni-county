@@ -5,6 +5,7 @@ include '../includes/admin_auth.php';
 include '../includes/db.php';
 
 include '../includes/admin_header.php';
+include '..includes/admin_sidebar';
 
 $sql = "SELECT DATE(created_at)
 AS reg_date,
@@ -21,7 +22,7 @@ ORDER BY reg_date DESC";
 $result = mysqli_query($conn, $sql);
 
 ?>
-
+<div class="admin-content">
 <div class="container py-4">
 
 <div class="card border-0 shadow-lg rounded-4 p-4">
@@ -81,5 +82,5 @@ echo $row['total'];
 </div>
 
 </div>
-
+</div>
 <?php include '../includes/admin_footer.php'; ?>
