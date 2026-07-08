@@ -3,6 +3,7 @@ include '../includes/db.php';
 include '../includes/admin_auth.php';
 include '../includes/admin_header.php';
 include 'auth_check.php';
+include 'includes/admin_sidebar.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -54,7 +55,7 @@ mysqli_stmt_execute($centre_stmt);
 $centre = mysqli_fetch_assoc(mysqli_stmt_get_result($centre_stmt));
 
 ?>
-
+<div class="admin-content">
 
 <div class="container py-4">
 
@@ -335,5 +336,5 @@ class="text-decoration-none btn btn-dark">
 </div>
 
 </div>
-
+</div>
 <?php include '../includes/admin_footer.php'; ?>
