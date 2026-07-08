@@ -5,6 +5,7 @@ include '../includes/admin_auth.php';
 include '../includes/db.php';
 
 include '../includes/admin_header.php';
+include 'includes/admin_sidebar.php';
 
 $role = $_SESSION['admin_role'];
 $centre_id = $_SESSION['centre_id'];
@@ -63,7 +64,7 @@ $months = [
 ];
 
 ?>
-
+<div class="admin-content">
 <div class="container py-4">
 
 <div class="card border-0 shadow-lg rounded-4 p-4">
@@ -238,5 +239,5 @@ echo $row['pending_training'];
 </div>
 
 </div>
-
+</div>
 <?php include '../includes/admin_footer.php'; ?>
