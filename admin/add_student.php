@@ -4,7 +4,7 @@ include '../includes/db.php';
 include '../includes/admin_auth.php';
 
 include '../includes/admin_header.php';
-include 'includes/admin_sidebar.php'; 
+include '../includes/admin_sidebar.php'; 
 
 $centre_id = $_SESSION['centre_id'];
 
