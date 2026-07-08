@@ -1,6 +1,7 @@
 <?php
 include '../includes/db.php';
 include '../includes/admin_auth.php';
+include 'includes/admin_sidebar.php';
 
 
 $id = (int) $_GET['id'];
@@ -41,3 +42,5 @@ header("Location: manage_notes.php?deleted=success");
 exit();
 
 ?>
+<div class="admin-content">
+</div>
