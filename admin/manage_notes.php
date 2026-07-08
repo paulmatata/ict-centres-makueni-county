@@ -3,9 +3,8 @@ include '../includes/db.php';
 
 include '../includes/admin_auth.php';
 
-
 include '../includes/admin_header.php';
-
+include '../includes/admin_sidebar.php';
 $centre_id = $_SESSION['centre_id'];
 
 $role = $_SESSION['admin_role'];
@@ -45,7 +44,7 @@ mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
 ?>
-
+<div claass="admin-content">
 <div class="container py-4">
 
 <div class="card border-0 shadow-lg rounded-4 p-4">
@@ -163,5 +162,5 @@ Delete
 </div>
 
 </div>
-
+    </div>
 <?php include '../includes/admin_footer.php'; ?>
