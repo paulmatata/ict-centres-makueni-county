@@ -140,7 +140,6 @@ Logout
 <!--Update Student Status -->
 <div class="col-6 col-lg-3">
 <a href="update_student_status.php"
-   class="btn btn-success"
    onclick="return confirm('Update completion status for all students who have completed 5 weeks of training?');">
     <div class="card border-0 shadow-sm p-4 text-center dashboard-card">
 
