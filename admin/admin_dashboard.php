@@ -243,7 +243,28 @@ class="text-decoration-none">
 </a>
 
 </div>
-    
+    <!-- The following sections are only visible to super_admin -->
+<?php if($role == 'super_admin') {?>
+<!-- ADMINS -->
+
+<div class="col-6 col-lg-3">
+
+<div class="card border-0 shadow-sm p-4 text-center dashboard-card">
+
+<h1 class="text-success">
+
+<?php echo $admins; ?>
+
+</h1>
+
+<h5>Total Admins</h5>
+
+</div>
+
+</div>
+<!--the space left to maintain container size, do not delete-->
+<?php } ?>
+            
 <!-- ============================================================
      DASHBOARD CHARTS — HTML + SCRIPT
      ============================================================ -->
@@ -276,6 +297,11 @@ class="text-decoration-none">
 
 </div>
 
+
+    </div>
+
+</div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 
 <script>
@@ -377,30 +403,4 @@ new Chart(document.getElementById('intakeChart'), {
 });
 
 </script>
-<!-- The following sections are only visible to super_admin -->
-<?php if($role == 'super_admin') {?>
-<!-- ADMINS -->
-
-<div class="col-6 col-lg-3">
-
-<div class="card border-0 shadow-sm p-4 text-center dashboard-card">
-
-<h1 class="text-success">
-
-<?php echo $admins; ?>
-
-</h1>
-
-<h5>Total Admins</h5>
-
-</div>
-
-</div>
-<!--the space left to maintain container size, do not delete-->
-<?php } ?>
-
-</div>
-
-</div>
-</div>
 <?php include '../includes/admin_footer.php'; ?>
