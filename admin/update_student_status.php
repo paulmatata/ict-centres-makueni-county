@@ -62,7 +62,7 @@ $stmt_start->execute([$centre_id]);
         "Error updating students: " . $e->getMessage();
 }
 
-header("Location: admin_dashboard.php");
+header("Location: manage_students.php");
 exit();
 include '../includes/admin_footer.php';
 ?>
