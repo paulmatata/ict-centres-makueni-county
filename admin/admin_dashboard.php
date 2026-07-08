@@ -3,7 +3,7 @@ include '../includes/db.php';
 include '../includes/admin_auth.php';
 include '../includes/admin_header.php';
 include 'auth_check.php';
-include 'includes/admin_sidebar.php';
+include '../includes/admin_sidebar.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
