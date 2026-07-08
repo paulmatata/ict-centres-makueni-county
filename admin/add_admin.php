@@ -5,6 +5,7 @@ include '../includes/db.php';
 include '../includes/admin_auth.php';
 
 include '../includes/admin_header.php';
+include '../includes/admin_sidebar.php';
 
 $role = $_SESSION['admin_role'];
 
@@ -82,6 +83,7 @@ if(isset($_POST['submit'])){
 }
 
 ?>
+    <div class="admin-content">
 
 <div class="container py-4">
 
@@ -229,5 +231,6 @@ Create Admin
 </div>
 
 </div>
+    </div>
 
 <?php include '../includes/admin_footer.php'; ?>
