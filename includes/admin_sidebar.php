@@ -69,12 +69,12 @@ function nav_active($page, $current_page) {
 
         <li class="nav-item">
             <a class="nav-link <?php echo nav_active('reports.php', $current_page); ?>" href="reports.php">
-                <i class="bi bi-bar-chart"></i> Reports
+                <i class="bi bi-bar-chart"></i>Student Reports
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link <?php echo nav_active('centre_report.php', $current_page); ?>" href="center_report.php">
+            <a class="nav-link <?php echo nav_active('centre_report.php', $current_page); ?>" href="centre_report.php">
                 <i class="bi bi-building"></i> Centre Report
             </a>
         </li>
