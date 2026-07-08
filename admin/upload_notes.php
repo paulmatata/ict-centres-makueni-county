@@ -3,6 +3,7 @@
 include '../includes/db.php';
 include '../includes/admin_auth.php';
 include '../includes/admin_header.php';
+include '../includes/admin_sidebar';
 
 // 2. Include Composer's Autoloader for the Cloudinary SDK
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -74,7 +75,7 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
-
+<div class="admin-content">
 <div class="container py-4">
 
 <div class="card border-0 shadow-lg rounded-4 p-4">
@@ -163,5 +164,5 @@ Upload Notes
 </div>
 
 </div>
-
+</div>
 <?php include '../includes/admin_footer.php'; ?>
