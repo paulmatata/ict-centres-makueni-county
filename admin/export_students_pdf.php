@@ -3,11 +3,8 @@
 include '../includes/admin_auth.php';
 
 include '../includes/db.php';
-include '../includes/admin_header.php';
-include '../includes/admin_sidebar.php';
 
 require('../fpdf/fpdf.php');
-<div class="admin-content">
 
 $role = $_SESSION['admin_role'];
 
@@ -230,5 +227,3 @@ if (!$has_rows) {
 $pdf->Output('D', 'Students_Report.pdf');
 
 ?>
-
-<?php </div> include '../includes/admin_footer.php'; ?>
