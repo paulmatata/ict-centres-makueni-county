@@ -1,7 +1,7 @@
 <?php
 include '../includes/db.php';
 include '../includes/admin_auth.php';
-include 'includes/admin_sidebar.php';
+include '../includes/admin_sidebar.php';
 
 
 $id = (int) $_GET['id'];
