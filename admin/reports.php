@@ -5,6 +5,7 @@ include '../includes/admin_auth.php';
 include '../includes/db.php';
 
 include '../includes/admin_header.php';
+include '../includes/admin_sidebar.php';
 
 $role = $_SESSION['admin_role'];
 
@@ -80,7 +81,7 @@ $months = [
 ];
 
 ?>
-
+<div class="admin-content">
 <div class="d-flex justify-content-between align-items-center mb-4">
 <h2 class="fw-bold mb-0">Reports Dashboard</h2>
 <a href="admin_dashboard.php" class="btn btn-secondary">Back</a>
@@ -237,5 +238,5 @@ Removed Students
 </div>
 
 </div>
-
+</div>
 <?php include '../includes/admin_footer.php'; ?>
