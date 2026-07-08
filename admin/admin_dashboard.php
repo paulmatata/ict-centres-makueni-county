@@ -137,44 +137,6 @@ Logout
 
 </div>
 
-
-<!-- ADD STUDENT -->
-
-<div class="col-6 col-lg-3">
-
-<a href="add_student.php"
-class="text-decoration-none btn btn-primary">
-
-<div class="card border-0 shadow-sm p-4 text-center dashboard-card">
-
-<h1>👨‍🎓</h1>
-
-<h5>Add Student</h5>
-
-</div>
-
-</a>
-
-</div>
-
-<!-- MANAGE STUDENTS -->
-
-<div class="col-6 col-lg-3">
-
-<a href="manage_students.php"
-class="text-decoration-none btn btn-primary">
-
-<div class="card border-0 shadow-sm p-4 text-center dashboard-card">
-
-<h1>⚙️</h1>
-
-<h5>Manage Students</h5>
-
-</div>
-
-</a>
-
-</div>
 <!--Update Student Status -->
 <div class="col-6 col-lg-3">
 <a href="update_student_status.php"
@@ -206,75 +168,6 @@ class="text-decoration-none">
 
 </div>
 
-<div class="col-6 col-lg-3">
-
-<a href="manage_notes.php"
-class="text-decoration-none">
-
-<div class="card border-0 shadow-sm p-4 text-center dashboard-card">
-
-<h1>📚</h1>
-
-<h5>Manage Notes</h5>
-
-</div>
-
-</a>
-
-</div>
-
-    <div class="col-6 col-lg-3">
-
-<a href="reviews.php"
-class="text-decoration-none">
-
-<div class="card border-0 shadow-sm p-4 text-center dashboard-card">
-
-<h1>⭐</h1>
-
-<h5>Reviews</h5>
-
-</div>
-
-</a>
-
-</div>
-
-
-<div class="col-6 col-lg-3">
-
-<a href="reports.php"
-class="text-decoration-none">
-
-<div class="card border-0 shadow-sm p-4 text-center dashboard-card">
-
-<h1>📊</h1>
-
-<h5>Student Reports</h5>
-
-</div>
-
-</a>
-
-</div>
-
-    <div class="col-6 col-lg-3">
-
-<a href="centre_report.php"
-class="text-decoration-none">
-
-<div class="card border-0 shadow-sm p-4 text-center dashboard-card">
-
-<h1>📈</h1>
-
-<h5>Center Reports</h5>
-
-</div>
-
-</a>
-
-</div>
-
 <!-- The following sections are only visible to super_admin -->
 <?php if($role == 'super_admin') {?>
 <!-- ADMINS -->
@@ -294,43 +187,7 @@ class="text-decoration-none">
 </div>
 
 </div>
-
-<div class="col-6 col-lg-3">
-
-<a href="add_admin.php"
-class="text-decoration-none btn btn-danger">
-
-<div class="card border-0 shadow-sm p-4 text-center dashboard-card">
-
-<h1>🛡️</h1>
 <!--the space left to maintain container size, do not delete-->
-
-<h5> Add Admin </h5>
-
-</div>
-
-</a>
-
-</div>
-
-<!-- MANAGE ADMINS -->
-
-<div class="col-6 col-lg-3">
-
-<a href="manage_admins.php"
-class="text-decoration-none btn btn-dark">
-
-<div class="card border-0 shadow-sm p-4 text-center dashboard-card">
-
-<h1>👥</h1>
-
-<h5>Manage Admins</h5>
-
-</div>
-
-</a>
-
-</div>
 <?php } ?>
 
 </div>
