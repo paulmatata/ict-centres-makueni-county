@@ -217,8 +217,9 @@ foreach ($colors as $c) {
 foreach (['png', 'jpg', 'jpeg'] as $ext) {
     $kenya_logo = 'assets/images/Kenya_logo1.' . $ext;
     if (file_exists($kenya_logo)) {
-        $pdf->Image($kenya_logo, $page_w - 40, 18, 22);
+        $pdf->Image($kenya_logo, 20, 18, 22);
         break;
+        $pdf->Image('assets/images/kenya-logo.png', $page_w - 40, 18, 22);
     }
 }
 
@@ -287,7 +288,7 @@ $pdf->SetY($y + 6);
 $footer_y = $page_h - 46;
 
 // Chief Officer signature
-$co_sig = 'assets/images/co.png';
+$co_sig = 'assets/images/co.jpeg';
 if (file_exists($co_sig)) {
     $pdf->Image($co_sig, 30, $footer_y - 12, 45);
 }
@@ -299,7 +300,7 @@ $pdf->SetFont('Arial', 'B', 10);
 $pdf->Cell(55, 5, 'CHIEF OFFICER - ICT', 0, 0, 'C');
 
 // CECM signature
-$cecm_sig = 'assets/images/cecm.png';
+$cecm_sig = 'assets/images/cecm.jpeg';
 if (file_exists($cecm_sig)) {
     $pdf->Image($cecm_sig, $page_w - 100, $footer_y - 12, 45);
 }
