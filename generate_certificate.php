@@ -220,6 +220,7 @@ for ($base_y = 15; $base_y < $page_h - 10; $base_y += 3) {
 // Restore background cursor positions safely
 $pdf->SetXY($current_x, $current_y);
 // ========================================================================
+$pdf->SetAlpha(1);
 // ---- Nested border frame, rounded corners ----
 // 1. Setup the exact shared dimensions
 $outer_inset  = 9;   // Blue frame spacing
