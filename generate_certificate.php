@@ -104,6 +104,70 @@ class PDF extends FPDF
         $this->_putextgstates();
         parent::_putresources();
     }
+
+    // ---- Rotation support (for the diagonal tiled watermark text) ----
+    var $angle = 0;
+
+    function Rotate($angle, $x = -1, $y = -1)
+    {
+        if ($x == -1) $x = $this->x;
+        if ($y == -1) $y = $this->y;
+        if ($this->angle != 0) $this->_out('Q');
+        $this->angle = $angle;
+        if ($angle != 0) {
+            $angle *= M_PI / 180;
+            $c = cos($angle);
+            $s = sin($angle);
+            $cx = $x * $this->k;
+            $cy = ($this->h - $y) * $this->k;
+            $this->_out(sprintf('q %.5F %.5F %.5F %.5F %.2F %.2F cm 1 0 0 1 %.2F %.2F cm', $c, $s, -$s, $c, $cx, $cy, -$cx, -$cy));
+        }
+    }
+
+    function _endpage()
+    {
+        if ($this->angle != 0) {
+            $this->angle = 0;
+            $this->_out('Q');
+        }
+        parent::_endpage();
+    }
+
+    // ---- Rounded rectangle (for smoother, non-overlapping border corners) ----
+    function RoundedRect($x, $y, $w, $h, $r, $style = 'D')
+    {
+        $k = $this->k;
+        $hp = $this->h;
+        $op = ($style == 'F') ? 'f' : 'S';
+        $myArc = 4 / 3 * (sqrt(2) - 1);
+
+        $this->_out(sprintf('%.2F %.2F m', ($x + $r) * $k, ($hp - $y) * $k));
+
+        $xc = $x + $w - $r; $yc = $y + $r;
+        $this->_out(sprintf('%.2F %.2F l', $xc * $k, ($hp - $y) * $k));
+        $this->_Arc($xc + $r * $myArc, $yc - $r, $xc + $r, $yc - $r * $myArc, $xc + $r, $yc);
+
+        $xc = $x + $w - $r; $yc = $y + $h - $r;
+        $this->_out(sprintf('%.2F %.2F l', ($x + $w) * $k, ($hp - $yc) * $k));
+        $this->_Arc($xc + $r, $yc + $r * $myArc, $xc + $r * $myArc, $yc + $r, $xc, $yc + $r);
+
+        $xc = $x + $r; $yc = $y + $h - $r;
+        $this->_out(sprintf('%.2F %.2F l', $xc * $k, ($hp - ($y + $h)) * $k));
+        $this->_Arc($xc - $r * $myArc, $yc + $r, $xc - $r, $yc + $r * $myArc, $xc - $r, $yc);
+
+        $xc = $x + $r; $yc = $y + $r;
+        $this->_out(sprintf('%.2F %.2F l', $x * $k, ($hp - $yc) * $k));
+        $this->_Arc($xc - $r, $yc - $r * $myArc, $xc - $r * $myArc, $yc - $r, $xc, $yc - $r);
+
+        $this->_out($op);
+    }
+
+    function _Arc($x1, $y1, $x2, $y2, $x3, $y3)
+    {
+        $h = $this->h;
+        $k = $this->k;
+        $this->_out(sprintf('%.2F %.2F %.2F %.2F %.2F %.2F c ', $x1 * $k, ($h - $y1) * $k, $x2 * $k, ($h - $y2) * $k, $x3 * $k, ($h - $y3) * $k));
+    }
 }
 
 // ============================================================
@@ -117,13 +181,24 @@ $pdf->AddPage();
 $page_w = 297;
 $page_h = 210;
 
-// ---- Watermark ----
-$pdf->SetAlpha(0.07);
-$wm_size = 140;
-$pdf->Image('assets/images/makueni-logo.png', ($page_w - $wm_size) / 2, ($page_h - $wm_size) / 2, $wm_size);
+// ---- Watermark: tiled diagonal text, matching the county's style ----
+$pdf->SetAlpha(0.08);
+$pdf->SetFont('Arial', 'B', 11);
+$pdf->SetTextColor(11, 61, 105);
+
+$wm_text = 'ICT DIGITAL EMPOWERMENT - GOVERNMENT OF MAKUENI COUNTY';
+$wm_angle = 30;
+
+for ($wy = -20; $wy < $page_h + 20; $wy += 22) {
+    for ($wx = -40; $wx < $page_w + 60; $wx += 95) {
+        $pdf->Rotate($wm_angle, $wx, $wy);
+        $pdf->Text($wx, $wy, $wm_text);
+        $pdf->Rotate(0);
+    }
+}
 $pdf->SetAlpha(1);
 
-// ---- Nested border frame ----
+// ---- Nested border frame, rounded corners ----
 $colors = [
     ['color' => [11, 61, 105], 'inset' => 6],
     ['color' => [212, 160, 23], 'inset' => 9],
@@ -132,13 +207,20 @@ $colors = [
 
 foreach ($colors as $c) {
     $pdf->SetDrawColor($c['color'][0], $c['color'][1], $c['color'][2]);
-    $pdf->SetLineWidth(1);
+    $pdf->SetLineWidth(0.8);
     $inset = $c['inset'];
-    $pdf->Rect($inset, $inset, $page_w - (2 * $inset), $page_h - (2 * $inset));
+    $pdf->RoundedRect($inset, $inset, $page_w - (2 * $inset), $page_h - (2 * $inset), 4, 'D');
 }
 
 // ---- Header ----
-$pdf->Image('assets/images/kenya-logo.png', $page_w - 40, 18, 22);
+// Kenya coat of arms only — no county seal (the QR code now covers that role)
+foreach (['png', 'jpg', 'jpeg'] as $ext) {
+    $kenya_logo = 'assets/images/Kenya_logo1.' . $ext;
+    if (file_exists($kenya_logo)) {
+        $pdf->Image($kenya_logo, $page_w - 40, 18, 22);
+        break;
+    }
+}
 
 $pdf->SetXY(0, 16);
 $pdf->SetFont('Arial', 'B', 10);
