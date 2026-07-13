@@ -200,14 +200,14 @@ $pdf->SetAlpha(1);
 
 // ---- Nested border frame, rounded corners ----
 $colors = [
-    ['color' => [11, 61, 105], 'inset' => 6],
-    ['color' => [212, 160, 23], 'inset' => 9],
-    ['color' => [27, 122, 61], 'inset' => 12],
+    ['color' => [11, 61, 105], 'inset' => 6 'width' => 1.2],
+    ['color' => [212, 160, 23], 'inset' => 9 'width' => 0.75],
+    ['color' => [27, 122, 61], 'inset' => 12 'width' => 0.5],
 ];
 
 foreach ($colors as $c) {
     $pdf->SetDrawColor($c['color'][0], $c['color'][1], $c['color'][2]);
-    $pdf->SetLineWidth(0.5);
+    $pdf->SetLineWidth($c['width']);
     $inset = $c['inset'];
     $pdf->RoundedRect($inset, $inset, $page_w - (2 * $inset), $page_h - (2 * $inset), 4, 'D');
 }
