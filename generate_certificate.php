@@ -123,7 +123,15 @@ class PDF extends FPDF
             $this->_out(sprintf('q %.5F %.5F %.5F %.5F %.2F %.2F cm 1 0 0 1 %.2F %.2F cm', $c, $s, -$s, $c, $cx, $cy, -$cx, -$cy));
         }
     }
-
+function RotatedText($pdf, $x, $y, $txt, $angle) {
+    // Text rotation via FPDF command string
+    $p = sprintf('BT %.2F %.2F %.2F %.2F %.2F %.2F Tm (%s) Tj ET', 
+                 cos(deg2rad($angle)), sin(deg2rad($angle)), 
+                 -sin(deg2rad($angle)), cos(deg2rad($angle)), 
+                 $x * $pdf->k, ($pdf->h - $y) * $pdf->k, 
+                 str_replace(')', '\\)', str_replace('(', '\\(', $txt)));
+    $pdf->_out($p);
+}
     function _endpage()
     {
         if ($this->angle != 0) {
@@ -182,31 +190,44 @@ $page_w = 297;
 $page_h = 210;
 
 // ---- Watermark: tiled diagonal text, matching the county's style ----
-// ==================== WAVY WATERMARK BACKGROUND ====================
+// ==================== CONTINUOUS SINE WAVE WATERMARK ====================
 $current_x = $pdf->GetX();
 $current_y = $pdf->GetY();
 
 $pdf->SetFont('Arial', 'B', 8);
-$pdf->SetTextColor(230, 232, 230); // Very light security tint
+$pdf->SetTextColor(232, 234, 232); // Faint background tint
 
-// Step 1: Set the physical text row lines across the page
-for ($base_y = 15; $base_y < $page_h - 10; $base_y += 22) {
+$watermark_text = "Government of Makueni County - ICT Capacity Building Programme - ";
+$text_length = strlen($watermark_text);
+
+// Vertical grid rows
+for ($base_y = 15; $base_y < $page_h - 10; $base_y += 24) {
     
-    // Step 2: Print strings horizontally with small increments to sample the sine wave
-    for ($x = 10; $x < $page_w - 15; $x += 55) {
+    $char_index = 0;
+    // Step letter-by-letter across the entire page width seamlessly
+    for ($x = 12; $x < $page_w - 12; $x += 2.1) { // 2.1mm step per character spacing
         
-        // Step 3: Compute the wave offset using sin()
-        // Changing '0.05' changes the frequency (how tightly packed the waves are)
-        // Changing '5.5' changes the amplitude (the vertical height/depth of the wave)
-        $wave_offset = sin($x * 0.05) * 5.5;
+        // 1. Calculate wave properties
+        $angle_modifier = $x * 0.05; // Alters wave frequency
+        $wave_offset = sin($angle_modifier) * 6.5; // Amplitude/height of wave
         $calculated_y = $base_y + $wave_offset;
         
-        // Alternate text strings within the continuous wave mesh
-        $pdf->Text($x, $calculated_y, "Government of Makueni County -ICT Capacity Building Programme-");
+        // 2. Calculate the exact slope/tangent angle of the wave at this precise coordinate
+        $slope = cos($angle_modifier) * 6.5 * 0.05;
+        $angle = rad2deg(atan($slope));
+        
+        // 3. Extract the exact current character to stitch them together seamlessly
+        $char = $watermark_text[$char_index % $text_length];
+        
+        // 4. Print the characters with rotation matching the curve direction
+        RotatedText($pdf, $x, $calculated_y, $char, $angle);
+        
+        $char_index++;
     }
 }
 
 $pdf->SetXY($current_x, $current_y);
+// ========================================================================
 // ===================================================================
 // ---- Nested border frame, rounded corners ----
 // 1. Setup the exact shared dimensions
