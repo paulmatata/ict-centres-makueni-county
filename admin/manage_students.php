@@ -6,6 +6,7 @@ include '../includes/db.php';
 
 include '../includes/admin_header.php';
 include '../includes/admin_sidebar.php';
+
 $centre_id = $_SESSION['centre_id'];
 
 $role = $_SESSION['admin_role'];
@@ -91,7 +92,7 @@ $row_number = $offset + 1;
 <h3>
 Manage Students
 </h3>
-<button class='btn btn-danger align-right'><a href="update_student_status.php">Update Student Status</a></button>
+
 <?php
 
 if(isset($_SESSION['success'])){
@@ -163,6 +164,16 @@ Back
     <?php endif; ?>
 </form>
 
+<?php $can_issue = !empty($centre_id); ?>
+
+<?php if ($can_issue): ?>
+<div class="alert alert-info d-flex justify-content-between align-items-center">
+    <span><i class="bi bi-info-circle"></i> Select completed students below, then issue their certificates. Students download them from their own portal once issued.</span>
+</div>
+<?php endif; ?>
+
+<form method="POST" action="issue_certificates.php" id="certificateForm">
+
 <div class="table-responsive">
 
 <table class="table table-hover">
@@ -171,6 +182,9 @@ Back
 
 <tr>
 
+<?php if ($can_issue): ?>
+<th><input type="checkbox" id="selectAll"></th>
+<?php endif; ?>
 <th>#</th>
 <th>Name</th>
 <th>Username</th>
@@ -181,6 +195,7 @@ Back
 <th>Training Start</th>
 <th>Completion</th>
 <th>Training Status</th>
+<th>Certificate</th>
 <th>Action </th>
 
 </tr>
@@ -192,7 +207,7 @@ Back
 <?php
 
 if (mysqli_num_rows($result) === 0) {
-    echo '<tr><td colspan="11" class="text-center text-muted py-4">No students found.</td></tr>';
+    echo '<tr><td colspan="12" class="text-center text-muted py-4">No students found.</td></tr>';
 }
 
 while($student =
@@ -201,6 +216,14 @@ mysqli_fetch_assoc($result)){
 ?>
 
 <tr>
+
+<?php if ($can_issue): ?>
+<td>
+<?php if ($student['completion_status'] === 'completed' && empty($student['certificate_serial'])): ?>
+    <input type="checkbox" name="student_ids[]" value="<?php echo $student['id']; ?>" class="cert-checkbox">
+<?php endif; ?>
+</td>
+<?php endif; ?>
 
 <td>
 <?php echo $row_number++; ?>
@@ -271,6 +294,16 @@ if ($student['status'] == 'removed'): ?>
 </td>
 
 <td>
+<?php if (!empty($student['certificate_serial'])): ?>
+    <span class="badge bg-success">Issued</span>
+<?php elseif ($student['completion_status'] === 'completed'): ?>
+    <span class="badge bg-warning text-dark">Ready to Issue</span>
+<?php else: ?>
+    <span class="badge bg-secondary">Not Yet</span>
+<?php endif; ?>
+</td>
+
+<td>
 
 <a
 href="reset_student_password.php?id=<?php
@@ -323,8 +356,25 @@ Reset Password
 </nav>
 <?php endif; ?>
 
+<?php if ($can_issue): ?>
+<button type="submit" class="btn btn-success mt-3" onclick="return confirm('Issue certificates for the selected students?');">
+    <i class="bi bi-award"></i> Issue Certificates for Selected
+</button>
+<p class="text-muted small mt-2">Note: only students on this page can be selected at once — if you have more than <?php echo $per_page; ?> to issue, repeat per page.</p>
+<?php endif; ?>
+
+</form>
+
 </div>
 
 </div>
+
+<?php if ($can_issue): ?>
+<script>
+document.getElementById('selectAll')?.addEventListener('change', function() {
+    document.querySelectorAll('.cert-checkbox').forEach(cb => cb.checked = this.checked);
+});
+</script>
+<?php endif; ?>
 </div>
 <?php include '../includes/admin_footer.php'; ?>
