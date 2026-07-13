@@ -199,17 +199,36 @@ for ($wy = -20; $wy < $page_h + 20; $wy += 22) {
 $pdf->SetAlpha(1);
 
 // ---- Nested border frame, rounded corners ----
+// 1. Draw the strict outer border frame (The 3 straight lines on the edges)
+$pdf->SetLineWidth(1.5);
+
+// Outer Blue Straight Border
+$pdf->SetDrawColor(11, 61, 105);
+$pdf->Rect(2, 2, $page_w - 4, $page_h - 4, 'D');
+
+// Middle Gold Straight Border
+$pdf->SetDrawColor(212, 160, 23);
+$pdf->Rect(3.5, 3.5, $page_w - 7, $page_h - 7, 'D');
+
+// Inner Green Straight Border
+$pdf->SetDrawColor(27, 122, 61);
+$pdf->Rect(5, 5, $page_w - 10, $page_h - 10, 'D');
+
+
+// 2. Now draw your original nested rounded borders inside
 $colors = [
-    ['color' => [11, 61, 105], 'inset' => 6 'width' => 1.2],
-    ['color' => [212, 160, 23], 'inset' => 9 'width' => 0.75],
-    ['color' => [27, 122, 61], 'inset' => 12 'width' => 0.5],
+    ['color' => [11, 61, 105],  'inset' => 7], 
+    ['color' => [212, 160, 23], 'inset' => 9], 
+    ['color' => [27, 122, 61],  'inset' => 11], 
 ];
 
 foreach ($colors as $c) {
     $pdf->SetDrawColor($c['color'][0], $c['color'][1], $c['color'][2]);
-    $pdf->SetLineWidth($c['width']);
+    $pdf->SetLineWidth(0.5);
+    
     $inset = $c['inset'];
-    $pdf->RoundedRect($inset, $inset, $page_w - (2 * $inset), $page_h - (2 * $inset), 4, 'D');
+    // Rounded rectangles will share a common layout boundary inside the frame strip
+    $pdf->RoundedRect($inset, $inset, $page_w - (2 * $inset), $page_h - (2 * $inset), 3, '1234', 'D');
 }
 
 // ---- Header ----
