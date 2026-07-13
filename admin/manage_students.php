@@ -92,7 +92,7 @@ $row_number = $offset + 1;
 <h3>
 Manage Students
 </h3>
-
+<a href="update_student_status.php" class="btn btn-danger">Update Student Status</a>
 <?php
 
 if(isset($_SESSION['success'])){
