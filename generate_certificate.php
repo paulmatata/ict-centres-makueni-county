@@ -203,27 +203,21 @@ for ($base_y = 15; $base_y < $page_h - 10; $base_y += 24) {
         $wave_offset = sin($angle_modifier) * 6.5; 
         $calculated_y = $base_y + $wave_offset;
         
-        // 2. Compute exact rotation angles matching the curve slopes
-        $slope = cos($angle_modifier) * 6.5 * 0.05;
-        $angle = rad2deg(atan($slope));
-        
-        // 3. Extract the clean current character
+        // 2. Extract the clean current character
         $char = $watermark_text[$char_index % $text_length];
-        $char_escaped = str_replace([')', '('], ['\\)', '\\('], $char);
         
-        // 4. INLINE FPDF ROTATION COMMAND (Fixes the undefined function error)
-        $rad = deg2rad($angle);
-        $p = sprintf('BT %.2F %.2F %.2F %.2F %.2F %.2F Tm (%s) Tj ET', 
-                     cos($rad), sin($rad), 
-                     -sin($rad), cos($rad), 
-                     $x * $pdf->k, ($pdf->h - $calculated_y) * $pdf->k, 
-                     $char_escaped);
-        $pdf->_out($p);
+        // 3. Render using standard safe FPDF methods
+        $pdf->SetXY($x, $calculated_y);
+        
+        // We use a tiny width (2.1) to type the letter, then the loop 
+        // controls the exact path positioning seamlessly!
+        $pdf->Cell(2.1, 0, $char, 0, 0, 'C');
         
         $char_index++;
     }
 }
 
+// Restore background cursor positions safely
 $pdf->SetXY($current_x, $current_y);
 // ========================================================================
 // ---- Nested border frame, rounded corners ----
