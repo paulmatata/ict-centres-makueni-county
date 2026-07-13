@@ -182,22 +182,33 @@ $page_w = 297;
 $page_h = 210;
 
 // ---- Watermark: tiled diagonal text, matching the county's style ----
-$pdf->SetAlpha(0.08);
-$pdf->SetFont('Arial', 'B', 11);
-$pdf->SetTextColor(11, 61, 105);
+// ==================== WAVY WATERMARK BACKGROUND ====================
+$current_x = $pdf->GetX();
+$current_y = $pdf->GetY();
 
-$wm_text = 'ICT DIGITAL EMPOWERMENT - GOVERNMENT OF MAKUENI COUNTY';
-$wm_angle = 30;
+$pdf->SetFont('Arial', 'B', 8);
+$pdf->SetTextColor(230, 232, 230); // Very light security tint
 
-for ($wy = -20; $wy < $page_h + 20; $wy += 22) {
-    for ($wx = -40; $wx < $page_w + 60; $wx += 95) {
-        $pdf->Rotate($wm_angle, $wx, $wy);
-        $pdf->Text($wx, $wy, $wm_text);
-        $pdf->Rotate(0);
+// Step 1: Set the physical text row lines across the page
+for ($base_y = 15; $base_y < $page_h - 10; $base_y += 22) {
+    
+    // Step 2: Print strings horizontally with small increments to sample the sine wave
+    for ($x = 10; $x < $page_w - 15; $x += 55) {
+        
+        // Step 3: Compute the wave offset using sin()
+        // Changing '0.05' changes the frequency (how tightly packed the waves are)
+        // Changing '5.5' changes the amplitude (the vertical height/depth of the wave)
+        $wave_offset = sin($x * 0.05) * 5.5;
+        $calculated_y = $base_y + $wave_offset;
+        
+        // Alternate text strings within the continuous wave mesh
+        $pdf->Text($x, $calculated_y, "Government of Makueni County");
+        $pdf->Text($x + 28, $calculated_y + 4, "-ICT Capacity Building Programme-");
     }
 }
-$pdf->SetAlpha(1);
 
+$pdf->SetXY($current_x, $current_y);
+// ===================================================================
 // ---- Nested border frame, rounded corners ----
 // 1. Setup the exact shared dimensions
 $outer_inset  = 9;   // Blue frame spacing
