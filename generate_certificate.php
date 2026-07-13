@@ -257,15 +257,16 @@ $pdf->SetTextColor(11, 61, 105);
 $pdf->Cell($page_w, 12, strtoupper($student['fullname']), 0, 1, 'C');
 
 // 1. line positioning using current cursor position.
-$current_y = $pdf->GetY() + 4; // Add a small 4mm gap below the name
+$current_y = $pdf->GetY() + 0; // Add a small 4mm gap below the name
 
 // 2. Set the line styling
 $pdf->SetDrawColor(128, 128, 128); // Grey color matching the certificate
-$pdf->SetLineWidth(0.5);           // Line thickness
+$pdf->SetLineWidth(0.75);           // Line thickness
 
 // 3. Draw the extended line 
 // Move the start left (from 40 to 20) and the end right (from 257 to 277)
 $pdf->Line(20, $current_y, 277, $current_y);
+$pdf->SetY($current_y + 10);
 
 
 $pdf->SetFont('Arial', '', 12);
