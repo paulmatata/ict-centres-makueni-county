@@ -288,7 +288,7 @@ $pdf->SetY($y + 6);
 $footer_y = $page_h - 46;
 
 // Chief Officer signature
-$co_sig = 'assets/images/co.jpeg';
+$co_sig = 'assets/images/co.png';
 if (file_exists($co_sig)) {
     $pdf->Image($co_sig, 30, $footer_y - 12, 45);
 }
@@ -300,7 +300,7 @@ $pdf->SetFont('Arial', 'B', 10);
 $pdf->Cell(55, 5, 'CHIEF OFFICER - ICT', 0, 0, 'C');
 
 // CECM signature
-$cecm_sig = 'assets/images/cecm.jpeg';
+$cecm_sig = 'assets/images/cecm.png';
 if (file_exists($cecm_sig)) {
     $pdf->Image($cecm_sig, $page_w - 100, $footer_y - 12, 45);
 }
