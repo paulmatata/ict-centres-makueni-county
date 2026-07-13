@@ -123,15 +123,6 @@ class PDF extends FPDF
             $this->_out(sprintf('q %.5F %.5F %.5F %.5F %.2F %.2F cm 1 0 0 1 %.2F %.2F cm', $c, $s, -$s, $c, $cx, $cy, -$cx, -$cy));
         }
     }
-function RotatedText($pdf, $x, $y, $txt, $angle) {
-    // Text rotation via FPDF command string
-    $p = sprintf('BT %.2F %.2F %.2F %.2F %.2F %.2F Tm (%s) Tj ET', 
-                 cos(deg2rad($angle)), sin(deg2rad($angle)), 
-                 -sin(deg2rad($angle)), cos(deg2rad($angle)), 
-                 $x * $pdf->k, ($pdf->h - $y) * $pdf->k, 
-                 str_replace(')', '\\)', str_replace('(', '\\(', $txt)));
-    $pdf->_out($p);
-}
     function _endpage()
     {
         if ($this->angle != 0) {
@@ -195,32 +186,39 @@ $current_x = $pdf->GetX();
 $current_y = $pdf->GetY();
 
 $pdf->SetFont('Arial', 'B', 8);
-$pdf->SetTextColor(232, 234, 232); // Faint background tint
+$pdf->SetTextColor(232, 234, 232); // Light watermark tint
 
 $watermark_text = "Government of Makueni County - ICT Capacity Building Programme - ";
 $text_length = strlen($watermark_text);
+$char_index = 0;
 
-// Vertical grid rows
+// Vertical rows grid
 for ($base_y = 15; $base_y < $page_h - 10; $base_y += 24) {
     
-    $char_index = 0;
-    // Step letter-by-letter across the entire page width seamlessly
-    for ($x = 12; $x < $page_w - 12; $x += 2.1) { // 2.1mm step per character spacing
+    // Step letter-by-letter across the horizontal page width cleanly
+    for ($x = 12; $x < $page_w - 12; $x += 2.1) {
         
         // 1. Calculate wave properties
-        $angle_modifier = $x * 0.05; // Alters wave frequency
-        $wave_offset = sin($angle_modifier) * 6.5; // Amplitude/height of wave
+        $angle_modifier = $x * 0.05; 
+        $wave_offset = sin($angle_modifier) * 6.5; 
         $calculated_y = $base_y + $wave_offset;
         
-        // 2. Calculate the exact slope/tangent angle of the wave at this precise coordinate
+        // 2. Compute exact rotation angles matching the curve slopes
         $slope = cos($angle_modifier) * 6.5 * 0.05;
         $angle = rad2deg(atan($slope));
         
-        // 3. Extract the exact current character to stitch them together seamlessly
+        // 3. Extract the clean current character
         $char = $watermark_text[$char_index % $text_length];
+        $char_escaped = str_replace([')', '('], ['\\)', '\\('], $char);
         
-        // 4. Print the characters with rotation matching the curve direction
-        RotatedText($pdf, $x, $calculated_y, $char, $angle);
+        // 4. INLINE FPDF ROTATION COMMAND (Fixes the undefined function error)
+        $rad = deg2rad($angle);
+        $p = sprintf('BT %.2F %.2F %.2F %.2F %.2F %.2F Tm (%s) Tj ET', 
+                     cos($rad), sin($rad), 
+                     -sin($rad), cos($rad), 
+                     $x * $pdf->k, ($pdf->h - $calculated_y) * $pdf->k, 
+                     $char_escaped);
+        $pdf->_out($p);
         
         $char_index++;
     }
@@ -228,7 +226,6 @@ for ($base_y = 15; $base_y < $page_h - 10; $base_y += 24) {
 
 $pdf->SetXY($current_x, $current_y);
 // ========================================================================
-// ===================================================================
 // ---- Nested border frame, rounded corners ----
 // 1. Setup the exact shared dimensions
 $outer_inset  = 9;   // Blue frame spacing
