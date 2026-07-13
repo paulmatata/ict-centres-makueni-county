@@ -193,14 +193,14 @@ $text_length = strlen($watermark_text);
 $char_index = 0;
 
 // Vertical rows grid
-for ($base_y = 15; $base_y < $page_h - 10; $base_y += 24) {
+for ($base_y = 15; $base_y < $page_h - 10; $base_y += 3) {
     
     // Step letter-by-letter across the horizontal page width cleanly
-    for ($x = 12; $x < $page_w - 12; $x += 2.1) {
+    for ($x = 12; $x < $page_w - 12; $x += 2) {
         
         // 1. Calculate wave properties
-        $angle_modifier = $x * 0.05; 
-        $wave_offset = sin($angle_modifier) * 6.5; 
+        $angle_modifier = $x * 0.04; 
+        $wave_offset = sin($angle_modifier) * 3.5; 
         $calculated_y = $base_y + $wave_offset;
         
         // 2. Extract the clean current character
