@@ -207,13 +207,14 @@ $colors = [
 
 foreach ($colors as $c) {
     $pdf->SetDrawColor($c['color'][0], $c['color'][1], $c['color'][2]);
-    $pdf->SetLineWidth(0.8);
+    $pdf->SetLineWidth(0.5);
     $inset = $c['inset'];
     $pdf->RoundedRect($inset, $inset, $page_w - (2 * $inset), $page_h - (2 * $inset), 4, 'D');
 }
 
 // ---- Header ----
 // Kenya coat of arms only — no county seal (the QR code now covers that role)
+$pdf->Cell($page_w, 4,  $student['certificate_serial'], 0, 1, 'l');
 foreach (['png', 'jpg', 'jpeg'] as $ext) {
     $kenya_logo = 'assets/images/Kenya_logo1.' . $ext;
     if (file_exists($kenya_logo)) {
@@ -330,8 +331,7 @@ $pdf->Image($qr_path, ($page_w - 22) / 2, $footer_y - 20, 22);
 
 $pdf->SetXY(0, $footer_y + 4);
 $pdf->SetFont('Arial', '', 8);
-$pdf->Cell($page_w, 4, $student['centre_name'] . '  |  ' . $student['certificate_serial'], 0, 1, 'C');
-$pdf->Cell($page_w, 4, 'Issued: ' . date('d M Y'), 0, 0, 'C');
+$pdf->Cell($page_w, 4, $student['centre_name'] . '  |  ' .'Issued: ' . date('d M Y'), 0, 0, 'C');
 
 $pdf->Output('D', 'Certificate_' . preg_replace('/[^A-Za-z0-9]/', '_', $student['fullname']) . '.pdf');
 
