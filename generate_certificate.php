@@ -219,8 +219,8 @@ foreach (['png', 'jpg', 'jpeg'] as $ext) {
     if (file_exists($kenya_logo)) {
         $pdf->Image($kenya_logo, 20, 18, 22);
         break;
-        $pdf->Image('assets/images/kenya-logo.png', $page_w - 40, 18, 22);
     }
+   $pdf->Image('assets/images/kenya-logo.png', $page_w - 40, 18, 22);
 }
 
 $pdf->SetXY(0, 16);
