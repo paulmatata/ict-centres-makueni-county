@@ -2,11 +2,23 @@
 
 session_start();
 
+include 'includes/db.php';
+
 if(!isset($_SESSION['student_id'])){
     header("Location: login.php");
+    exit();
 }
 
 include 'includes/header.php';
+
+$student_id = $_SESSION['student_id'];
+
+$stmt = mysqli_prepare($conn, "SELECT completion_status, certificate_serial FROM students WHERE id = ?");
+mysqli_stmt_bind_param($stmt, "i", $student_id);
+mysqli_stmt_execute($stmt);
+$student_status = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
+
+$certificate_ready = !empty($student_status['certificate_serial']);
 
 ?>
 
@@ -35,6 +47,29 @@ class="text-decoration-none">
 <h5>Training Letter</h5>
 </div>
 </a>
+</div>
+
+<div class="col-6 col-lg-3">
+
+<a href="certificate.php"
+class="text-decoration-none">
+
+<div class="card dashboard-card border-0 shadow-sm text-center p-4 position-relative">
+
+<?php if ($certificate_ready): ?>
+    <span class="badge bg-success position-absolute top-0 end-0 m-2">Ready</span>
+<?php endif; ?>
+
+<i class="bi bi-award dashboard-icon"></i>
+
+<h5>
+Certificate
+</h5>
+
+</div>
+
+</a>
+
 </div>
 
 <div class="col-6 col-lg-3">
