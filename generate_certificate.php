@@ -199,44 +199,55 @@ for ($wy = -20; $wy < $page_h + 20; $wy += 22) {
 $pdf->SetAlpha(1);
 
 // ---- Nested border frame, rounded corners ----
-// 1. Define the geometric properties to achieve a perfect overlap
-$outer_inset  = 9;                           // Matches the Blue border inset
-$middle_inset = 12;                          // Matches the Yellow/Gold border inset
-$inner_inset  = 15;                          // Matches the Green border inset
+// 1. Setup the exact shared dimensions
+$outer_inset  = 9;   // Blue frame spacing
+$middle_inset = 12;  // Yellow/Gold frame spacing
+$inner_inset  = 15;  // Green frame spacing
 
-// Calculate matching vertical bounds based on the outer frame boundary
-$line_start_y = $outer_inset; 
+$line_start_y = $outer_inset;
 $line_end_y   = $page_h - $outer_inset;
 
 $pdf->SetLineWidth(1.5);
 
-// --- Overlap 1: Black line overlaps with the Blue border left edge ---
-$pdf->SetDrawColor(0, 0, 0); 
+// 2. Draw the vertical flag lines on the left side
+$pdf->SetDrawColor(0, 0, 0); // Black
 $pdf->Line($outer_inset, $line_start_y, $outer_inset, $line_end_y);
 
-// --- Overlap 2: Red line overlaps with the Yellow/Gold border left edge ---
-$pdf->SetDrawColor(200, 16, 46); 
+$pdf->SetDrawColor(200, 16, 46); // Red
 $pdf->Line($middle_inset, $line_start_y, $middle_inset, $line_end_y);
 
-// --- Overlap 3: Green flag line overlaps with the Green border left edge ---
-$pdf->SetDrawColor(0, 128, 50); 
+$pdf->SetDrawColor(0, 128, 50); // Green
 $pdf->Line($inner_inset, $line_start_y, $inner_inset, $line_end_y);
 
 
-// 2. Nested rounded borders covering the whole file(county flag)
-$colors = [
-    ['color' => [11, 61, 105],  'inset' => $outer_inset],  // Blue
-    ['color' => [212, 160, 23], 'inset' => $middle_inset], // Yellow/Gold
-    ['color' => [27, 122, 61],  'inset' => $inner_inset],  // Green
-];
+// 3. Draw the Outer BLUE border (Open on the left side—starts from the green line)
+$pdf->SetDrawColor(11, 61, 105);
+$pdf->SetLineWidth(0.5);
+// Top Line: Starts at inner_inset X, runs to right edge
+$pdf->Line($inner_inset, $outer_inset, $page_w - $outer_inset, $outer_inset);
+// Right Line: Runs down the right edge
+$pdf->Line($page_w - $outer_inset, $outer_inset, $page_w - $outer_inset, $page_h - $outer_inset);
+// Bottom Line: Runs back to the inner_inset X
+$pdf->Line($inner_inset, $page_h - $outer_inset, $page_w - $outer_inset, $page_h - $outer_inset);
 
-foreach ($colors as $c) {
-    $pdf->SetDrawColor($c['color'][0], $c['color'][1], $c['color'][2]);
-    $pdf->SetLineWidth(0.5);
-    
-    $inset = $c['inset'];
-    $pdf->RoundedRect($inset, $inset, $page_w - (2 * $inset), $page_h - (2 * $inset), 4, '1234', 'D');
-}
+
+// 4. Draw the Middle GOLD border (Open on the left side—starts from the green line)
+$pdf->SetDrawColor(212, 160, 23);
+$pdf->SetLineWidth(0.5);
+// Top Line
+$pdf->Line($inner_inset, $middle_inset, $page_w - $middle_inset, $middle_inset);
+// Right Line
+$pdf->Line($page_w - $middle_inset, $middle_inset, $page_w - $middle_inset, $page_h - $middle_inset);
+// Bottom Line
+$pdf->Line($inner_inset, $page_h - $middle_inset, $page_w - $middle_inset, $page_h - $middle_inset);
+
+
+// 5. Draw the complete INNER GREEN frame using a normal Rect or RoundedRect
+$pdf->SetDrawColor(27, 122, 61);
+$pdf->SetLineWidth(0.5);
+// By using a complete rectangle here, it naturally forms the vertical line on the left
+// and completes the top, right, and bottom lines perfectly flush with the other colors.
+$pdf->RoundedRect($inner_inset, $inner_inset, $page_w - (2 * $inner_inset), $page_h - (2 * $inner_inset), 4, '1234', 'D');
 
 // ---- Header ----
 // Kenya coat of arms only — no county seal (the QR code now covers that role)
