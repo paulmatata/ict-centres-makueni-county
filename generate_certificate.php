@@ -214,18 +214,18 @@ foreach ($colors as $c) {
 
 // ---- Header ----
 // Kenya coat of arms only — no county seal (the QR code now covers that role)
-$pdf->SetY($current_y + 2);
+$pdf->SetXY(20, 20);
 $pdf->Cell($page_w, 4,  $student['certificate_serial'], 0, 1, 'l');
 foreach (['png', 'jpg', 'jpeg'] as $ext) {
     $kenya_logo = 'assets/images/Kenya_logo1.' . $ext;
     if (file_exists($kenya_logo)) {
-        $pdf->Image($kenya_logo, 20, 18, 22);
+        $pdf->Image($kenya_logo, 20, 28, 22);
         break;
     }
-   $pdf->Image('assets/images/kenya-logo.png', $page_w - 40, 18, 22);
+   $pdf->Image('assets/images/kenya-logo.png', $page_w - 40, 28, 22);
 }
 
-$pdf->SetXY(0, 16);
+$pdf->SetXY(0, 24);
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->SetTextColor(80, 80, 80);
 $pdf->Cell($page_w, 6, 'REPUBLIC OF KENYA', 0, 1, 'C');
