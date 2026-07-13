@@ -199,20 +199,20 @@ for ($wy = -20; $wy < $page_h + 20; $wy += 22) {
 $pdf->SetAlpha(1);
 
 // ---- Nested border frame, rounded corners ----
-// 1. Draw the strict outer border frame (The 3 straight lines on the edges)
+// 1. Draw the strict vertical lines(kenyan flag)
 $pdf->SetLineWidth(1.5);
 
-// Outer Blue Straight Border
-$pdf->SetDrawColor(11, 61, 105);
-$pdf->Rect(2, 2, $page_w - 4, $page_h - 4, 'D');
+// Outer Black vertical line
+$pdf-> SetDrawColor(0, 0, 0);
+$pdf->Line (3, 0, 3, $page_h);
 
-// Middle Gold Straight Border
-$pdf->SetDrawColor(212, 160, 23);
-$pdf->Rect(3.5, 3.5, $page_w - 7, $page_h - 7, 'D');
+// Red Vertical Line
+$pdf->SetDrawColor(200, 16, 46);
+$pdf->Line(4.5, 0, 4.5, $page_h);
 
-// Inner Green Straight Border
-$pdf->SetDrawColor(27, 122, 61);
-$pdf->Rect(5, 5, $page_w - 10, $page_h - 10, 'D');
+// Green vertical line
+$pdf->SetDrawColor(0, 128, 50);
+$pdf->Line(6, 0, 6, $page_h);
 
 
 // 2. Now draw your original nested rounded borders inside
