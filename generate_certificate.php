@@ -199,27 +199,35 @@ for ($wy = -20; $wy < $page_h + 20; $wy += 22) {
 $pdf->SetAlpha(1);
 
 // ---- Nested border frame, rounded corners ----
-// 1. Draw the strict vertical lines(kenyan flag)
+// 1. Define the geometric properties to achieve a perfect overlap
+$outer_inset  = 9;                           // Matches the Blue border inset
+$middle_inset = 12;                          // Matches the Yellow/Gold border inset
+$inner_inset  = 15;                          // Matches the Green border inset
+
+// Calculate matching vertical bounds based on the outer frame boundary
+$line_start_y = $outer_inset; 
+$line_end_y   = $page_h - $outer_inset;
+
 $pdf->SetLineWidth(1.5);
 
-// Outer Black vertical line
-$pdf-> SetDrawColor(0, 0, 0);
-$pdf->Line (3, 0, 3, $page_h);
+// --- Overlap 1: Black line overlaps with the Blue border left edge ---
+$pdf->SetDrawColor(0, 0, 0); 
+$pdf->Line($outer_inset, $line_start_y, $outer_inset, $line_end_y);
 
-// Red Vertical Line
-$pdf->SetDrawColor(200, 16, 46);
-$pdf->Line(4.5, 0, 4.5, $page_h);
+// --- Overlap 2: Red line overlaps with the Yellow/Gold border left edge ---
+$pdf->SetDrawColor(200, 16, 46); 
+$pdf->Line($middle_inset, $line_start_y, $middle_inset, $line_end_y);
 
-// Green vertical line
-$pdf->SetDrawColor(0, 128, 50);
-$pdf->Line(6, 0, 6, $page_h);
+// --- Overlap 3: Green flag line overlaps with the Green border left edge ---
+$pdf->SetDrawColor(0, 128, 50); 
+$pdf->Line($inner_inset, $line_start_y, $inner_inset, $line_end_y);
 
 
-// 2. Now draw your original nested rounded borders inside
+// 2. Nested rounded borders covering the whole file(county flag)
 $colors = [
-    ['color' => [11, 61, 105],  'inset' => 7], 
-    ['color' => [212, 160, 23], 'inset' => 9], 
-    ['color' => [27, 122, 61],  'inset' => 11], 
+    ['color' => [11, 61, 105],  'inset' => $outer_inset],  // Blue
+    ['color' => [212, 160, 23], 'inset' => $middle_inset], // Yellow/Gold
+    ['color' => [27, 122, 61],  'inset' => $inner_inset],  // Green
 ];
 
 foreach ($colors as $c) {
@@ -227,8 +235,7 @@ foreach ($colors as $c) {
     $pdf->SetLineWidth(0.5);
     
     $inset = $c['inset'];
-    // Rounded rectangles will share a common layout boundary inside the frame strip
-    $pdf->RoundedRect($inset, $inset, $page_w - (2 * $inset), $page_h - (2 * $inset), 3, '1234', 'D');
+    $pdf->RoundedRect($inset, $inset, $page_w - (2 * $inset), $page_h - (2 * $inset), 4, '1234', 'D');
 }
 
 // ---- Header ----
