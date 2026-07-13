@@ -202,8 +202,7 @@ for ($base_y = 15; $base_y < $page_h - 10; $base_y += 22) {
         $calculated_y = $base_y + $wave_offset;
         
         // Alternate text strings within the continuous wave mesh
-        $pdf->Text($x, $calculated_y, "Government of Makueni County");
-        $pdf->Text($x + 28, $calculated_y + 4, "-ICT Capacity Building Programme-");
+        $pdf->Text($x, $calculated_y, "Government of Makueni County -ICT Capacity Building Programme-");
     }
 }
 
