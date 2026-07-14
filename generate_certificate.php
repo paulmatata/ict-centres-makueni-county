@@ -186,14 +186,22 @@ $current_x = $pdf->GetX();
 $current_y = $pdf->GetY();
 
 $pdf->SetFont('Arial', 'B', 8);
-$pdf->SetTextColor(232, 234, 232); // Light watermark tint
+$watermark_colors=[
+    [220, 220, 220],
+    [245, 210, 215],
+    [210, 235, 215]
+    ];
 
 $watermark_text = "Government of Makueni County - ICT Capacity Building Programme - ";
 $text_length = strlen($watermark_text);
 $char_index = 0;
+$row_index=0;
 
 // Vertical rows grid
-for ($base_y = 15; $base_y < $page_h - 10; $base_y += 3) {
+for ($base_y = 15; $base_y < $page_h - 10; $base_y += 4) {
+
+    $current_color = $watermark_colors[$row_index % count($watermark_colors)];
+    $pdf->SetTextColor($current_coor[0], $current_color[1], $current_color[2]0;
     
     // Step letter-by-letter across the horizontal page width cleanly
     for ($x = 12; $x < $page_w - 12; $x += 2) {
@@ -215,6 +223,7 @@ for ($base_y = 15; $base_y < $page_h - 10; $base_y += 3) {
         
         $char_index++;
     }
+    $char_index++;
 }
 
 // Restore background cursor positions safely
