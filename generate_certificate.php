@@ -204,7 +204,7 @@ for ($base_y = 15; $base_y < $page_h - 10; $base_y += 4) {
     $pdf->SetTextColor($current_color[0], $current_color[1], $current_color[2]);
     
     // Step letter-by-letter across the horizontal page width cleanly
-    for ($x = 12; $x < $page_w - 12; $x += 2) {
+    for ($x = 12; $x < $page_w - 12; $x += 2.1) {
         
         // 1. Calculate wave properties
         $angle_modifier = $x * 0.04; 
@@ -223,7 +223,7 @@ for ($base_y = 15; $base_y < $page_h - 10; $base_y += 4) {
         
         $char_index++;
     }
-    $char_index++;
+    $row_index++;
 }
 
 // Restore background cursor positions safely
