@@ -201,7 +201,7 @@ $row_index=0;
 for ($base_y = 15; $base_y < $page_h - 10; $base_y += 4) {
 
     $current_color = $watermark_colors[$row_index % count($watermark_colors)];
-    $pdf->SetTextColor($current_coor[0], $current_color[1], $current_color[2]0;
+    $pdf->SetTextColor($current_color[0], $current_color[1], $current_color[2]);
     
     // Step letter-by-letter across the horizontal page width cleanly
     for ($x = 12; $x < $page_w - 12; $x += 2) {
