@@ -366,9 +366,13 @@ for ($i = 0; $i < count($skills); $i += 2) {
     }
     $y += 6;
 }
-
+//---testing purposes--
+$pdf->SetFont('Arial', 'BU', 16);
+$pdf->SetTextColor(128, 0, 0);
+$pdf->SetXY(20, 20);
+$pdf->Cell($page_w, 7, 'NB: This certificate is only made for testing purposes, and can not be used otherwise', 0, 1, 'C');
+//extra spacing, do not touch
 $pdf->SetY($y + 6);
-
 // ---- Footer: signatures (uploaded images) + centre/serial + QR ----
 $footer_y = $page_h - 46;
 
