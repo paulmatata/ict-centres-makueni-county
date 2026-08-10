@@ -50,36 +50,34 @@ if (!preg_match('/[^A-Za-z0-9]/', $password_raw)) {
 // 4. HASH PASSWORD
 $password = password_hash($password_raw, PASSWORD_DEFAULT);
 
-// 5. TRAINING START DATE
+// 5. TRAINING START DATE (Constant-time O(1) logic)
 date_default_timezone_set('Africa/Nairobi');
-$today       = new DateTime();
+$today       = new DateTime('today');
 $base_intake = new DateTime('2026-07-27');
-$day_number  = $today->format('N');
+$day_number  = (int)$today->format('N');
 
-$active_week_start = clone $base_intake;
-$is_active_week    = false;
+// Total days elapsed since base intake
+$days_diff = $today->diff($base_intake)->days;
 
-while ($active_week_start <= $today) {
-    $week_end = clone $active_week_start;
-    $week_end->modify('+6 days');
-    if ($today >= $active_week_start && $today <= $week_end) {
-        $is_active_week = true;
-        break;
-    }
-    $active_week_start->modify('+5 weeks');
-}
+// Determine offset within the 35-day (5-week) cycle
+$cycle_days  = 35; 
+$days_into_cycle = $days_diff % $cycle_days;
+
+// Active week is the first 7 days (days 0 to 6) of the 35-day cycle
+$is_active_week = ($today >= $base_intake) && ($days_into_cycle < 7);
 
 if ($is_active_week && $day_number >= 1 && $day_number <= 4) {
+    // If active week Mon–Thu, start tomorrow
     $training_start = clone $today;
     $training_start->modify('+1 day');
 } else {
-    $next_intake = clone $base_intake;
-    while ($next_intake <= $today) {
-        $next_intake->modify('-2 weeks');
-    }
-    $training_start = $next_intake;
+    // Calculate exact start of the NEXT 5-week cycle without loops
+    $cycles_passed = floor($days_diff / $cycle_days);
+    $next_cycle_number = ($today < $base_intake) ? 0 : $cycles_passed + 1;
+    
+    $training_start = clone $base_intake;
+    $training_start->modify('+' . ($next_cycle_number * 5) . ' weeks');
 }
-
 
 $training_start_date = $training_start->format('Y-m-d');
 
