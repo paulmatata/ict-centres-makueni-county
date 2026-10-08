@@ -49,7 +49,7 @@ class="text-decoration-none">
 </a>
 </div>
 
-    //test stk push
+    <!--test stk push-->
     <div class="col-6 col-lg-3">
 <a href="stkpush.php"
 class="text-decoration-none">
