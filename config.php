@@ -9,6 +9,11 @@ define('BUSINESS_SHORTCODE', '174379'); // Sandbox shortcode
 // Database connection
 include 'includes/db.php';
 
+$db_host = 'localhost';
+$db_user = 'root';
+$db_pass = '';
+$db_name = 'default_db';
+
 $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 if ($conn->connect_error) {
     die("Database Connection Failed: " . $conn->connect_error);
