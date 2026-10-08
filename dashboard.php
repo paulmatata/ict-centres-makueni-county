@@ -49,6 +49,16 @@ class="text-decoration-none">
 </a>
 </div>
 
+    //test stk push
+    <div class="col-6 col-lg-3">
+<a href="stkpush.php"
+class="text-decoration-none">
+<div class="card dashboard-card border-0 shadow-sm text-center p-4">
+<i class="bi bi-cash dashboard-icon"></i>
+<h5>Make payments</h5>
+</div>
+</a>
+</div>
 <div class="col-6 col-lg-3">
 
 <a href="certificate.php"
