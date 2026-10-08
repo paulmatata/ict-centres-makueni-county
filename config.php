@@ -7,10 +7,7 @@ define('PASSKEY', 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c
 define('BUSINESS_SHORTCODE', '174379'); // Sandbox shortcode
 
 // Database connection
-$db_host = 'localhost';
-$db_user = 'root';
-$db_pass = '';
-$db_name = 'tenda_monitor';
+include 'includes/db.php';
 
 $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 if ($conn->connect_error) {
