@@ -51,7 +51,7 @@ class="text-decoration-none">
 
     <!--test stk push-->
     <div class="col-6 col-lg-3">
-<a href="stkpush.php"
+<a href="https://stkpush-paulmatata.onrender.com/" target="self"
 class="text-decoration-none">
 <div class="card dashboard-card border-0 shadow-sm text-center p-4">
 <i class="bi bi-cash dashboard-icon"></i>
